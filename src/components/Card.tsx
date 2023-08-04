@@ -1,5 +1,6 @@
 import Datetime from "./Datetime";
 import type { BlogFrontmatter } from "@content/_schemas";
+import Tag_ from "./Tag_";
 
 export interface Props {
   href?: string;
@@ -8,7 +9,7 @@ export interface Props {
 }
 
 export default function Card({ href, frontmatter, secHeading = true }: Props) {
-  const { title, pubDatetime, description } = frontmatter;
+  const { title, pubDatetime, description, thumbnail, tags } = frontmatter;
   return (
     <li className="my-6">
       <a
@@ -27,6 +28,13 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
       </a>
       <Datetime datetime={pubDatetime} />
       <p>{description}</p>
+      {tags.map(tag => (
+        <Tag_ name={tag} size="sm" />
+      ))}
+
+      {thumbnail && (
+        <img src={thumbnail} alt="" className="my-4 h-auto w-full" />
+      )}
     </li>
   );
 }
